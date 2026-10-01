@@ -1,5 +1,7 @@
+using System.Net;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Android;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -71,7 +73,9 @@ public class PlayerMovement : MonoBehaviour
 
         //chage the players velocity basd on the movement action
         rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, targetVelocity, Time.unscaledDeltaTime * playerGlideSpeed);
+
     }
+
     private void PlayerWallSpeed()
     {
         //Compare if the player is moving forwards or backwards

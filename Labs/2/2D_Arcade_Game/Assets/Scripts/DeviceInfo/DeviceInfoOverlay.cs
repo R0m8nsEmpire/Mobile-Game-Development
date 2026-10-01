@@ -11,6 +11,11 @@ public class DeviceInfoOverlay : MonoBehaviour
         // so that the FPS figure does not flicker every frame.
     }
 
+    private void Awake()
+    {
+        Application.targetFrameRate = 60;
+    }
+
     void OnGUI()
     {
         if (style == null)
