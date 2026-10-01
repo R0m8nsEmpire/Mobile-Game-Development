@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
 
     //Rigidbiody2D component
     private Rigidbody2D rb;
-
+    
     //Thrust Particle
     [SerializeField] ParticleSystem playerThrustEffect;
 

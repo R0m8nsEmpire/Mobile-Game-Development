@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
         timeSurvived = 0;
         //Get the BKG Music
         bkgMusic = GetComponent<AudioSource>();
+        gameOverCanvas.gameObject.SetActive(false);
     }
     private IEnumerator FadeOutBlack()
     {
@@ -71,6 +72,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator HideGameShowEnd()
     {
         //Fade in the Game Over canvas and fade out the Game UI canvas
+        gameOverCanvas.gameObject.SetActive(true);
         while (gameUICanvas.alpha != 0)
         {
             gameUICanvas.alpha -= Time.deltaTime / 2;
