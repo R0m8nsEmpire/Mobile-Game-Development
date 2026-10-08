@@ -106,13 +106,11 @@ public class PlayerPowerups : MonoBehaviour
             {
                 Time.timeScale += Time.unscaledDeltaTime / 120;
             }
-
             if (!PauseGame.paused)
             {
                 //Clamp the time scale between .5 and 2
                 Time.timeScale = Mathf.Clamp(Time.timeScale, .5f, 2);
             }
-
         }
     }
 }
