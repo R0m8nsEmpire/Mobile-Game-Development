@@ -102,12 +102,17 @@ public class PlayerPowerups : MonoBehaviour
         if (speedCorutine == null)
         {
             //Slowly increase the speed of the entire game
-            if(Time.timeScale < 2)
+            if(Time.timeScale < 2 && !PauseGame.paused)
             {
                 Time.timeScale += Time.unscaledDeltaTime / 120;
             }
-            //Clamp the time scale between .5 and 2
-            Time.timeScale = Mathf.Clamp(Time.timeScale, .5f, 2);
+
+            if (!PauseGame.paused)
+            {
+                //Clamp the time scale between .5 and 2
+                Time.timeScale = Mathf.Clamp(Time.timeScale, .5f, 2);
+            }
+
         }
     }
 }
