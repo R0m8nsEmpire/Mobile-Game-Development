@@ -4,38 +4,24 @@ public class EnemyMovement : MonoBehaviour
 {
     [Range(1f, 20f)]
     public float moveSpeed = 3f;
-
+    Rigidbody2D rb2D;
+    private Camera cam;
+    private void Start()
+    {
+        rb2D = GetComponent<Rigidbody2D>();
+        GameObject camObj = GameObject.Find("Main Camera");
+        cam = camObj.GetComponent<Camera>();
+    }
     void Update()
     {
-        // ==========================================
-        // UNOPTIMISED SIN #1: REPEATED LOCAL COMPONENTS
-        // ==========================================
-        // Fixed to fetch *this specific* enemy's Rigidbody, preventing them from freezing 
-        // when new clones spawn, while still wasting CPU cycles on unnecessary lookups.
-        Rigidbody2D rb2D = GetComponent<Rigidbody2D>();
-
         if (rb2D != null)
         {
-            // UNOPTIMISED SIN #2: MATRIX MATH OVERKILL
-            Matrix4x4 matrix = transform.localToWorldMatrix;
-            Vector4 currentPos = matrix.GetColumn(3);
-
-            currentPos.x -= moveSpeed * Time.deltaTime;
-
-            rb2D.position = new Vector2(currentPos.x, currentPos.y);
+            rb2D.linearVelocityX = -moveSpeed;
         }
-
-        // UNOPTIMISED SIN #3: SCREEN BOUNDS SCENE CHECK
-        GameObject camObj = GameObject.Find("Main Camera");
-        if (camObj != null)
+        Vector3 screenPos = cam.WorldToScreenPoint(transform.position);
+        if (screenPos.x < -100f)
         {
-            Camera cam = camObj.GetComponent<Camera>();
-            Vector3 screenPos = cam.WorldToScreenPoint(transform.position);
-
-            if (screenPos.x < -100f)
-            {
-                Destroy(gameObject);
-            }
+            Destroy(gameObject);
         }
     }
 }

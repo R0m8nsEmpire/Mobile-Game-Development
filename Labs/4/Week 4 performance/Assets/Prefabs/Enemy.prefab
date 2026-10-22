@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dc9c845cb2fae642af58528131ce977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
-  moveSpeed: 20
+  moveSpeed: 10
 --- !u!50 &-8571478557658427637
 Rigidbody2D:
   serializedVersion: 5
