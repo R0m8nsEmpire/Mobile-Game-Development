@@ -6,12 +6,15 @@ public class DeviceSettingsSetup : MonoBehaviour
     [SerializeField] RectTransform canvasPanel;
     Vector2Int lastSize;
     Rect lastSafe;
-    void Start()
+    private void Awake()
     {
         //Set the screen orientation to portrait
         Screen.orientation = ScreenOrientation.Portrait;
         Screen.autorotateToPortrait = true;
-        Screen.autorotateToPortraitUpsideDown = true;
+        Screen.autorotateToPortraitUpsideDown = false;
+    }
+    private void Update()
+    {
         //Set the min max of the canvas to the Screens safe area
         var size = new Vector2Int(Screen.width, Screen.height);
         if (Screen.safeArea == lastSafe && size == lastSize)
@@ -27,4 +30,5 @@ public class DeviceSettingsSetup : MonoBehaviour
         canvasPanel.anchorMax = max;
         canvasPanel.offsetMin = canvasPanel.offsetMax = Vector2.zero;
     }
+
 }

@@ -2081,6 +2081,55 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &951122119
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 951122121}
+  - component: {fileID: 951122120}
+  m_Layer: 0
+  m_Name: PLANET GAME OBJECT
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &951122120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951122119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c10ebc1ddfd938846bb00134d0d2fc24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlanetRotation
+  planetNormalRotation: {fileID: 2106320659}
+  rotationSpeed: 5
+  toggleGravity: 1
+  DEBUGTEXT: {fileID: 0}
+--- !u!4 &951122121
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951122119}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2106320659}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &955080525
 GameObject:
   m_ObjectHideFlags: 0
@@ -4131,9 +4180,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2106320657}
+      - m_Target: {fileID: 951122120}
         m_TargetAssemblyTypeName: PlanetRotation, Assembly-CSharp
-        m_MethodName: ResetGyroRotation
+        m_MethodName: ResetGravityDefaultRotation
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4350,7 +4399,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2106320659}
   - component: {fileID: 2106320658}
-  - component: {fileID: 2106320657}
   m_Layer: 0
   m_Name: Planet
   m_TagString: Untagged
@@ -4358,20 +4406,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2106320657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2106320656}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c10ebc1ddfd938846bb00134d0d2fc24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlanetRotation
-  rotationSpeed: 5
-  toggleGyroscope: 1
 --- !u!212 &2106320658
 SpriteRenderer:
   serializedVersion: 2
@@ -4439,13 +4473,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2106320656}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2.78, y: 2.78, z: 2.78}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 801215210}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 951122121}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2125716540
 GameObject:
@@ -4594,4 +4628,4 @@ SceneRoots:
   - {fileID: 1595298496}
   - {fileID: 1897689270}
   - {fileID: 1503642350}
-  - {fileID: 2106320659}
+  - {fileID: 951122121}

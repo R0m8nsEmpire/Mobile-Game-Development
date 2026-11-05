@@ -1,8 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class PlanetRotation : MonoBehaviour
 {
+    //Planet pieces
+    [SerializeField] Transform planetNormalRotation;
     //Rotation variables
     private Vector3 rotationVector;
     [SerializeField] float rotationSpeed = 5;
@@ -10,10 +13,16 @@ public class PlanetRotation : MonoBehaviour
     public bool toggleGravity = true;
     private Vector3 gravityVector;
     private float defaultGravityRotation;
+
+    public TextMeshProUGUI DEBUGTEXT;
+
     private void Start()
     {
         //Set the Z rotation to rotation speed
         rotationVector = new Vector3(0,0, -rotationSpeed);
+    }
+    private void OnEnable()
+    {
         //Check if the phone has a gravity sensor
         if (GravitySensor.current != null)
         {
@@ -29,7 +38,6 @@ public class PlanetRotation : MonoBehaviour
             //Disable gravity rotation
             toggleGravity = false;
         }
-
     }
     private void OnDisable()
     {
@@ -44,23 +52,36 @@ public class PlanetRotation : MonoBehaviour
     }
     private void Update()
     {
-        //If gyroscope is enabled then use the gyroscope rotation. Otherwise just rotate the planet
+        //Rotate the planet
+        RotatePlanet();
+        //If gyroscope is enabled then use the gyroscope rotation + RotatePlanet(). Otherwise just RotatePlanet()
         if (toggleGravity)
         {
-            //Set the gavity Vector to the gravity sensor value
-            gravityVector = UnityEngine.InputSystem.GravitySensor.current.gravity.ReadValue();
-            //Get an angle from the X and Y values
-            float angle = Mathf.Atan2(gravityVector.x, -gravityVector.y) * Mathf.Rad2Deg;
-            //Set the target rotation to the angle - the default gavity value
-            Quaternion targetRotation = Quaternion.Euler(0,0,angle - defaultGravityRotation);
-            //Set the rotation to the target rotation
-            transform.rotation = targetRotation;
+            GravityRotation();
         }
-        else
+    }
+    private void GravityRotation()
+    {
+        //Set the gavity Vector to the gravity sensor value
+        gravityVector = UnityEngine.InputSystem.GravitySensor.current.gravity.ReadValue();
+        //Check the gravity force
+        float gravity = new Vector2(gravityVector.x, gravityVector.y).magnitude;
+        //If the gravity is less than 2 don't rotate to gravity, rotate the planet normally
+        if (gravity < .2f)
         {
-            //Planet Rotation
-            transform.Rotate(rotationVector * Time.deltaTime);
+            return;
         }
+        //Get an angle from the X and Y values
+        float angle = Mathf.Atan2(gravityVector.x, -gravityVector.y) * Mathf.Rad2Deg;
+        //Set the target rotation to the angle - the default gavity value
+        Quaternion targetRotation = Quaternion.Euler(0, 0, angle - defaultGravityRotation);
+        //Set the rotation to the target rotation
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5);
+    }
+    private void RotatePlanet()
+    {
+        //Rotate Planet
+        planetNormalRotation.transform.Rotate(rotationVector * Time.deltaTime);
     }
     public void ResetGravityDefaultRotation()
     {
