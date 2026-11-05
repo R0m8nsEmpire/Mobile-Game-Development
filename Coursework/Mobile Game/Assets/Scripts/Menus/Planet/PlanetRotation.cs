@@ -6,50 +6,67 @@ public class PlanetRotation : MonoBehaviour
     //Rotation variables
     private Vector3 rotationVector;
     [SerializeField] float rotationSpeed = 5;
-    //Gyroscope variables
-    public bool toggleGyroscope = true;
-    private Vector3 gyroVector;
-    private Vector3 defaultGyroRotation;
+    //Gravity variables
+    public bool toggleGravity = true;
+    private Vector3 gravityVector;
+    private float defaultGravityRotation;
     private void Start()
     {
         //Set the Z rotation to rotation speed
         rotationVector = new Vector3(0,0, -rotationSpeed);
-        if (SystemInfo.supportsGyroscope)
+        //Check if the phone has a gravity sensor
+        if (GravitySensor.current != null)
         {
-            InputSystem.EnableDevice(UnityEngine.InputSystem.Gyroscope.current);
-            toggleGyroscope = true;
+            //Enable Device
+            InputSystem.EnableDevice(UnityEngine.InputSystem.GravitySensor.current);
+            //Get a default rotation variable
+            ResetGravityDefaultRotation();
+            //Enable gravity rotation
+            toggleGravity = true;
         }
         else
         {
-            toggleGyroscope = false;
+            //Disable gravity rotation
+            toggleGravity = false;
         }
+
     }
     private void OnDisable()
     {
-        if (SystemInfo.supportsGyroscope)
+        //Check if the phone has a gravity sensor
+        if (GravitySensor.current != null)
         {
-            InputSystem.DisableDevice(UnityEngine.InputSystem.Gyroscope.current);
-            toggleGyroscope = true;
+            //Disable device
+            InputSystem.DisableDevice(UnityEngine.InputSystem.GravitySensor.current);
+            //Disable gravity rotation
+            toggleGravity = false;
         }
     }
     private void Update()
     {
         //If gyroscope is enabled then use the gyroscope rotation. Otherwise just rotate the planet
-        if (toggleGyroscope)
+        if (toggleGravity)
         {
-            gyroVector = UnityEngine.InputSystem.Gyroscope.current.angularVelocity.value - defaultGyroRotation;
-            transform.Rotate(new Vector3(0,0, -gyroVector.z));
+            //Set the gavity Vector to the gravity sensor value
+            gravityVector = UnityEngine.InputSystem.GravitySensor.current.gravity.ReadValue();
+            //Get an angle from the X and Y values
+            float angle = Mathf.Atan2(gravityVector.x, -gravityVector.y) * Mathf.Rad2Deg;
+            //Set the target rotation to the angle - the default gavity value
+            Quaternion targetRotation = Quaternion.Euler(0,0,angle - defaultGravityRotation);
+            //Set the rotation to the target rotation
+            transform.rotation = targetRotation;
         }
         else
         {
             //Planet Rotation
             transform.Rotate(rotationVector * Time.deltaTime);
         }
-
-        Debug.Log(gyroVector.magnitude);
     }
-    public void ResetGyroRotation()
+    public void ResetGravityDefaultRotation()
     {
-        defaultGyroRotation = UnityEngine.InputSystem.Gyroscope.current.angularVelocity.value;
+        //Set the resetRot Vector to the gravity sensor value
+        Vector3 resetRot = UnityEngine.InputSystem.GravitySensor.current.gravity.ReadValue();
+        //Set the default gravity rotation from the X and Y values
+        defaultGravityRotation = Mathf.Atan2(resetRot.x, -resetRot.y) * Mathf.Rad2Deg;
     }
 }
