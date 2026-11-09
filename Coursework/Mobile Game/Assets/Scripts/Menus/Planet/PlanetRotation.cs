@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.UI;
 
 public class PlanetRotation : MonoBehaviour
 {
@@ -14,12 +15,14 @@ public class PlanetRotation : MonoBehaviour
     private Vector3 gravityVector;
     private float defaultGravityRotation;
 
-    public TextMeshProUGUI DEBUGTEXT;
+    private RawImage planetTexture;
 
     private void Start()
     {
         //Set the Z rotation to rotation speed
         rotationVector = new Vector3(0,0, -rotationSpeed);
+        //Get the planet Texture
+        planetTexture = GetComponentInChildren<RawImage>();
     }
     private void OnEnable()
     {
@@ -53,7 +56,7 @@ public class PlanetRotation : MonoBehaviour
     private void Update()
     {
         //Rotate the planet
-        RotatePlanet();
+        RotatePlanetTexture();
         //If gyroscope is enabled then use the gyroscope rotation + RotatePlanet(). Otherwise just RotatePlanet()
         if (toggleGravity)
         {
@@ -78,10 +81,11 @@ public class PlanetRotation : MonoBehaviour
         //Set the rotation to the target rotation
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5);
     }
-    private void RotatePlanet()
+    private void RotatePlanetTexture()
     {
         //Rotate Planet
-        planetNormalRotation.transform.Rotate(rotationVector * Time.deltaTime);
+
+        planetTexture.uvRect = new Rect(planetTexture.uvRect.position + new Vector2(.5f, 0) * Time.deltaTime, planetTexture.uvRect.size);
     }
     public void ResetGravityDefaultRotation()
     {
