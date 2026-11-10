@@ -5,25 +5,15 @@ using UnityEngine.UI;
 
 public class PlanetRotation : MonoBehaviour
 {
-    //Planet pieces
-    [SerializeField] Transform planetNormalRotation;
-    //Rotation variables
-    private Vector3 rotationVector;
-    [SerializeField] float rotationSpeed = 5;
     //Gravity variables
-    public bool toggleGravity = true;
+    private bool toggleGravity = true;
     private Vector3 gravityVector;
     private float defaultGravityRotation;
 
-    private RawImage planetTexture;
-
-    private void Start()
-    {
-        //Set the Z rotation to rotation speed
-        rotationVector = new Vector3(0,0, -rotationSpeed);
-        //Get the planet Texture
-        planetTexture = GetComponentInChildren<RawImage>();
-    }
+    //Planet Rotation Texture
+    [SerializeField] RawImage planetTexture;
+    //Planet Rotation Speed
+    [SerializeField] float planetRotationSpeed;
     private void OnEnable()
     {
         //Check if the phone has a gravity sensor
@@ -83,9 +73,8 @@ public class PlanetRotation : MonoBehaviour
     }
     private void RotatePlanetTexture()
     {
-        //Rotate Planet
-
-        planetTexture.uvRect = new Rect(planetTexture.uvRect.position + new Vector2(.5f, 0) * Time.deltaTime, planetTexture.uvRect.size);
+        //Rotate Planet Texture
+        planetTexture.uvRect = new Rect(planetTexture.uvRect.position + new Vector2(planetRotationSpeed / 100, 0) * Time.deltaTime, planetTexture.uvRect.size);
     }
     public void ResetGravityDefaultRotation()
     {

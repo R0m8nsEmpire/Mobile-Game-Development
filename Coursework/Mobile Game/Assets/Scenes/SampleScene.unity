@@ -3468,10 +3468,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c10ebc1ddfd938846bb00134d0d2fc24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlanetRotation
-  planetNormalRotation: {fileID: 0}
-  rotationSpeed: 5
-  toggleGravity: 1
-  PlanetTexture: {fileID: 2113682800}
+  planetTexture: {fileID: 2113682802}
+  planetRotationSpeed: 1
 --- !u!114 &1890608533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4176,7 +4174,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1890608532}
         m_TargetAssemblyTypeName: PlanetRotation, Assembly-CSharp
         m_MethodName: ResetGravityDefaultRotation
         m_Mode: 1
