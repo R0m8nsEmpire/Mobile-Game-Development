@@ -1,9 +1,14 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
 public class UpgradeMenu : MonoBehaviour
 {
+    //Buttons
     [SerializeField] GameObject[] hideButtons;
     [SerializeField] GameObject upgradeMenu;
+    //DEFENCES
+    public List<GameObject> shieldDefences = new List<GameObject>();
+
     private void OnEnable()
     {
         EnhancedTouchSupport.Enable();
@@ -48,6 +53,18 @@ public class UpgradeMenu : MonoBehaviour
         foreach(GameObject uiElement in hideButtons)
         {
             uiElement.SetActive(false);
+        }
+    }
+    //DEFENCE UPGRADE
+    public void ShieldDefence()
+    {
+        for (int i = 0; i < shieldDefences.Count; i++)
+        {
+            if (!shieldDefences[i].activeInHierarchy)
+            {
+                shieldDefences[i].SetActive(true);
+                return;
+            }
         }
     }
 }
