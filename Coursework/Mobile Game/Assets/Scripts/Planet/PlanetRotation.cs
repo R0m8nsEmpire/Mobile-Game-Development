@@ -15,6 +15,7 @@ public class PlanetRotation : MonoBehaviour
     [SerializeField] float planetRotationSpeed;
     //Stuff to rotate
     [SerializeField] GameObject[] objectsToRotate;
+    [SerializeField] GameObject defences;
 
     private void OnEnable()
     {
@@ -49,6 +50,8 @@ public class PlanetRotation : MonoBehaviour
     {
         //Rotate the planet
         RotatePlanetTexture();
+        //Rotate the defences
+        RotateTheDefences();
         //If gyroscope is enabled then use the gyroscope rotation + RotatePlanet(). Otherwise just RotatePlanet()
         if (toggleGravity)
         {
@@ -75,6 +78,10 @@ public class PlanetRotation : MonoBehaviour
         {
             obj.transform.rotation = Quaternion.Slerp(obj.transform.rotation, targetRotation, 5);
         }
+    }
+    private void RotateTheDefences()
+    {
+        defences.transform.Rotate(new Vector3(0, 0, -5) * 5 * Time.deltaTime);
     }
     private void RotatePlanetTexture()
     {
