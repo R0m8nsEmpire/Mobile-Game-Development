@@ -2101,7 +2101,6 @@ GameObject:
   - component: {fileID: 861845056}
   - component: {fileID: 861845063}
   - component: {fileID: 861845062}
-  - component: {fileID: 861845061}
   - component: {fileID: 861845060}
   - component: {fileID: 861845059}
   - component: {fileID: 861845058}
@@ -2222,21 +2221,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Mask
   m_ShowMaskGraphic: 1
---- !u!114 &861845061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 861845055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c10ebc1ddfd938846bb00134d0d2fc24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlanetRotation
-  planetTexture: {fileID: 827636774}
-  planetRotationSpeed: 2
-  planetDefences: {fileID: 457848712}
 --- !u!114 &861845062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2819,6 +2803,7 @@ MonoBehaviour:
   camObj: {fileID: 519420028}
   spawnDistanceX: 6
   spawnDistanceY: 6
+  enemy_1_Controller_GameObject: {fileID: 383783684}
 --- !u!1 &1122870156
 GameObject:
   m_ObjectHideFlags: 0
@@ -4108,6 +4093,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8e9e90dfd31bdc4a969eb77f7a19d20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeviceInfoOverlay
+--- !u!1 &1960117287
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1960117289}
+  - component: {fileID: 1960117288}
+  m_Layer: 0
+  m_Name: PLANET CONTROLLER
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1960117288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960117287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c10ebc1ddfd938846bb00134d0d2fc24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlanetRotation
+  planetTexture: {fileID: 827636774}
+  planetRotationSpeed: 2
+  objectsToRotate:
+  - {fileID: 861845055}
+  - {fileID: 457848712}
+  - {fileID: 1115061035}
+--- !u!4 &1960117289
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960117287}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 585.4256, y: 853.34906, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1974114482
 GameObject:
   m_ObjectHideFlags: 0
@@ -4496,7 +4531,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 861845061}
+      - m_Target: {fileID: 1960117288}
         m_TargetAssemblyTypeName: PlanetRotation, Assembly-CSharp
         m_MethodName: ResetGravityDefaultRotation
         m_Mode: 1
@@ -4597,3 +4632,4 @@ SceneRoots:
   - {fileID: 1115061036}
   - {fileID: 985014312}
   - {fileID: 457848713}
+  - {fileID: 1960117289}

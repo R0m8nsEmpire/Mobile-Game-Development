@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using TMPro;
 using UnityEngine.UI;
 
 public class PlanetRotation : MonoBehaviour
@@ -14,9 +13,9 @@ public class PlanetRotation : MonoBehaviour
     [SerializeField] RawImage planetTexture;
     //Planet Rotation Speed
     [SerializeField] float planetRotationSpeed;
+    //Stuff to rotate
+    [SerializeField] GameObject[] objectsToRotate;
 
-    //Planet Defences Rotation
-    [SerializeField] GameObject planetDefences;
     private void OnEnable()
     {
         //Check if the phone has a gravity sensor
@@ -50,8 +49,6 @@ public class PlanetRotation : MonoBehaviour
     {
         //Rotate the planet
         RotatePlanetTexture();
-        //Rotate the planet defences
-        RotatePlanetDefences();
         //If gyroscope is enabled then use the gyroscope rotation + RotatePlanet(). Otherwise just RotatePlanet()
         if (toggleGravity)
         {
@@ -74,16 +71,15 @@ public class PlanetRotation : MonoBehaviour
         //Set the target rotation to the angle - the default gavity value
         Quaternion targetRotation = Quaternion.Euler(0, 0, angle - defaultGravityRotation);
         //Set the rotation to the target rotation
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5);
+        foreach (GameObject obj in objectsToRotate)
+        {
+            obj.transform.rotation = Quaternion.Slerp(obj.transform.rotation, targetRotation, 5);
+        }
     }
     private void RotatePlanetTexture()
     {
         //Rotate Planet Texture
         planetTexture.uvRect = new Rect(planetTexture.uvRect.position + new Vector2(planetRotationSpeed / 100, 0) * Time.deltaTime, planetTexture.uvRect.size);
-    }
-    private void RotatePlanetDefences()
-    {
-        planetDefences.transform.Rotate(new Vector3(0, 0, -15) * Time.deltaTime);
     }
     public void ResetGravityDefaultRotation()
     {

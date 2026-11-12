@@ -15,7 +15,10 @@ public class EnemySpawner : MonoBehaviour
     //Screen Size
     [HideInInspector]
     public float spawnDistanceX = 6;
+    [HideInInspector]
     public float spawnDistanceY = 6;
+    //Enemy 1 controller gameobject
+    [SerializeField] GameObject enemy_1_Controller_GameObject;
 
     private void Awake()
     {
@@ -34,6 +37,7 @@ public class EnemySpawner : MonoBehaviour
         for (int i = 0; i < amountToSpawn; i++)
         {
             GameObject obj = Instantiate(enemy1Prefab);
+            obj.transform.parent = enemy_1_Controller_GameObject.transform;
             obj.SetActive(false);
             enemyType1.Add(obj);
         }
