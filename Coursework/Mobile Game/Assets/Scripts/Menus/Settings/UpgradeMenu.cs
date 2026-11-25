@@ -10,7 +10,7 @@ public class UpgradeMenu : MonoBehaviour
     //DEFENCES
     public List<GameObject> shieldDefences = new List<GameObject>();
     //Button GameObjects
-    private GameObject upgradeButton;
+    private GameObject upgradeShieldButton;
 
     private void OnEnable()
     {
@@ -64,9 +64,9 @@ public class UpgradeMenu : MonoBehaviour
         //Set shield defences active to 0
         int shieldDefencesActive = 0;
         //Set the upgrade button to the button that triggered the function
-        if(upgradeButton == null)
+        if(upgradeShieldButton == null)
         {
-            upgradeButton = button;
+            upgradeShieldButton = button;
         }
         //Iterate through the shield defences
         for (int i = 0; i < shieldDefences.Count; i++)
@@ -76,7 +76,7 @@ public class UpgradeMenu : MonoBehaviour
             //If they are all active, then set the button color to red
             if (shieldDefencesActive == shieldDefences.Count)
             {
-                upgradeButton.GetComponent<Image>().color = Color.red;
+                upgradeShieldButton.GetComponent<Image>().color = Color.red;
             }
             //If the upgrade isn't active, then activate it
             if (!shieldDefences[i].activeInHierarchy)
@@ -86,5 +86,15 @@ public class UpgradeMenu : MonoBehaviour
                 return;
             }
         }
+    }
+    public void MissileDefence(GameObject button)
+    {
+        //Once it has started lower the spawn interval
+        if(Missile_Spawner.instance.spawnMissilesCoroutine != null && Missile_Spawner.instance.spawnInterval > 5)
+        {
+            Missile_Spawner.instance.spawnInterval--;
+        }
+        //Spawn missiles
+        Missile_Spawner.instance.StartSpawningMissiles();
     }
 }

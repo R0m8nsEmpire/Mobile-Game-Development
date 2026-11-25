@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 public class Missile_Spawner : MonoBehaviour
 {
+    //Make an instance
+    static public Missile_Spawner instance;
     //How often to spawn missiles
     public float spawnInterval;
     //How many missiles to spawn
@@ -14,6 +17,20 @@ public class Missile_Spawner : MonoBehaviour
     static public List<GameObject> targetedEnemies = new List<GameObject>();
     //Places for missiles to spawn
     [SerializeField] Transform[] placesToSpawn;
+    //Spawn missiles Coroutine
+    public Coroutine spawnMissilesCoroutine;
+    private void Awake()
+    {
+        //Make this an instance
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     private void Start()
     {
         //Object pool missiles
@@ -25,8 +42,15 @@ public class Missile_Spawner : MonoBehaviour
             obj.SetActive(false);
             missile.Add(obj);
         }
+    }
+    public void StartSpawningMissiles()
+    {
+        Debug.Log("Start spawning missiles");
         //Start the spawning coroutine
-        StartCoroutine(SpawnMissiles());
+        if(spawnMissilesCoroutine == null)
+        {
+            spawnMissilesCoroutine = StartCoroutine(SpawnMissiles());
+        }
     }
     IEnumerator SpawnMissiles()
     {
@@ -36,16 +60,8 @@ public class Missile_Spawner : MonoBehaviour
             //Wait for a set amount of time
             yield return new WaitForSeconds(spawnInterval);
             //Make a local gameobject for the enemy target
-            GameObject target = null;
-            //Get an enemy that isn't being targeted
-            for (int i = 0; i < EnemySpawner.instance.enemyType1.Count; i++)
-            {
-                if (EnemySpawner.instance.enemyType1[i].activeInHierarchy && !targetedEnemies.Contains(EnemySpawner.instance.enemyType1[i]))
-                {
-                    target = EnemySpawner.instance.enemyType1[i];
-                    break;
-                }
-            }
+            GameObject target = GetTarget();
+
             //Check if the target is not null
             if (target != null)
             {
@@ -80,5 +96,17 @@ public class Missile_Spawner : MonoBehaviour
         int rand = Random.Range(0, placesToSpawn.Length);
         Transform spawnHere = placesToSpawn[rand];
         return spawnHere;
+    }
+    //Get a target
+    public GameObject GetTarget()
+    {
+        for (int i = 0; i < EnemySpawner.instance.enemyType1.Count; i++)
+        {
+            if (EnemySpawner.instance.enemyType1[i].activeInHierarchy && !targetedEnemies.Contains(EnemySpawner.instance.enemyType1[i]))
+            {
+                return EnemySpawner.instance.enemyType1[i];
+            }
+        }
+        return null;
     }
 }

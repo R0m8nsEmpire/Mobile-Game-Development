@@ -6,7 +6,7 @@ public class Missile_Defence : MonoBehaviour
     public GameObject target;
     private void Update()
     {
-        if(target != null)
+        if(target != null || target.activeInHierarchy)
         {
             //Move towards the target
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, Time.deltaTime / 2);
@@ -17,8 +17,8 @@ public class Missile_Defence : MonoBehaviour
         }
         else
         {
-            //If it has no target then disable it
-            gameObject.SetActive(false);
+            //If it has no target then get a new one
+            target = Missile_Spawner.instance.GetTarget();
         }
     }
 
