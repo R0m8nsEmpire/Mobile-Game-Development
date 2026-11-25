@@ -3,41 +3,35 @@ using UnityEngine;
 
 public class Missile_Defence : MonoBehaviour
 {
-    //How often to spawn missiles
-    public float spawnInterval;
-    //How many missiles to spawn
-    private int amountToSpawn = 20;
-    //Missile prefab
-    [SerializeField] GameObject missilePrefab;
-    public List<GameObject> missile = new List<GameObject>();
-    private List<GameObject> targetedEnemies = new List<GameObject>();
-
-    private void Start()
+    public GameObject target;
+    private void Update()
     {
-        for (int i = 0; i < amountToSpawn; i++)
+        if(target != null)
         {
-            GameObject obj = Instantiate(missilePrefab);
-            obj.transform.parent = transform;
-            obj.transform.localPosition = Vector3.zero;
-            obj.SetActive(false);
-            missile.Add(obj);
+            //Move towards the target
+            transform.position = Vector3.MoveTowards(transform.position, target.transform.position, Time.deltaTime / 2);
+            //Rotate towards the target
+            Vector2 direction = (target.transform.position - transform.position).normalized;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 90));
+        }
+        else
+        {
+            //If it has no target then disable it
+            gameObject.SetActive(false);
         }
     }
 
-    private void Update()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        foreach (GameObject obj in missile)
+        //If hits the player then disable everything
+        if (collision.gameObject.CompareTag("Enemy"))
         {
-            if (obj.activeInHierarchy)
-            {
-                foreach (GameObject enemy in EnemySpawner.instance.enemyType1)
-                {
-                    if (enemy.activeInHierarchy && enemy.gameObject != targetedEnemies.Contains(enemy))
-                    {
-                        enemy.transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
-                    }
-                }
-            }
+            //remove the target from the targeted enemies list
+            Missile_Spawner.targetedEnemies.Remove(collision.gameObject);
+            collision.gameObject.SetActive(false);
+            target = null;
+            gameObject.SetActive(false);
         }
     }
 }
