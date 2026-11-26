@@ -33,19 +33,21 @@ public class EnemySpawner : MonoBehaviour
     }
     private void Start()
     {
-
+        //Object pool enemy type 1's
         for (int i = 0; i < amountToSpawn; i++)
         {
             GameObject obj = Instantiate(enemy1Prefab);
             obj.transform.parent = enemy_1_Controller_GameObject.transform;
             obj.SetActive(false);
             enemyType1.Add(obj);
+            obj.name = "Enemy1 " + i;
         }
-
+        //Get the camera and set the spawn distances to spawn off camera.
         Camera cam = camObj.GetComponent<Camera>();
         spawnDistanceY = cam.orthographicSize + 1;
         spawnDistanceX = (cam.orthographicSize * cam.aspect) + 1;
     }
+    //Get an object pooled enemy type 1
     public GameObject GetEnemyType1Objects()
     {
         for (int i = 0; i < enemyType1.Count; i++)
@@ -57,5 +59,4 @@ public class EnemySpawner : MonoBehaviour
         }
         return null;
     }
-
 }
