@@ -8,6 +8,9 @@ public class Enemy_Collision : MonoBehaviour
         {
             Missile_Spawner.instance.targetedEnemies.Remove(gameObject);
         }
+
+        ProgressStore.Instance.Tracker.OnEnemyDefeated();
+
         //If the player hits something then disable it
         gameObject.SetActive(false);
     }
