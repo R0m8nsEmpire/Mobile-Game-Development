@@ -40,6 +40,7 @@ public class EnemySpawner : MonoBehaviour
             obj.transform.parent = enemy_1_Controller_GameObject.transform;
             obj.SetActive(false);
             enemyType1.Add(obj);
+            obj.name = "Enemy1 " + i;
         }
         //Get the camera and set the spawn distances to spawn off camera.
         Camera cam = camObj.GetComponent<Camera>();

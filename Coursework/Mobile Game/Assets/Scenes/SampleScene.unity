@@ -2000,7 +2000,7 @@ GameObject:
   - component: {fileID: 843887747}
   - component: {fileID: 843887749}
   - component: {fileID: 843887748}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Shield 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3859,7 +3859,7 @@ Transform:
   m_GameObject: {fileID: 1649851431}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.70052, y: -0.20856, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3880,6 +3880,7 @@ MonoBehaviour:
   spawnInterval: 10
   missilePrefab: {fileID: 6266707250423076037, guid: e54e7a7b3e7e9654e85b009ed7a82456, type: 3}
   missile: []
+  targetedEnemies: []
   placesToSpawn:
   - {fileID: 1372885726}
   - {fileID: 524362175}
@@ -3999,7 +4000,7 @@ GameObject:
   - component: {fileID: 1678586557}
   - component: {fileID: 1678586559}
   - component: {fileID: 1678586558}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Shield 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4231,7 +4232,7 @@ GameObject:
   - component: {fileID: 1774103293}
   - component: {fileID: 1774103295}
   - component: {fileID: 1774103294}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Shield 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4397,7 +4398,7 @@ GameObject:
   - component: {fileID: 1776225794}
   - component: {fileID: 1776225796}
   - component: {fileID: 1776225795}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Shield 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4641,6 +4642,7 @@ MonoBehaviour:
   planetTexture: {fileID: 827636774}
   planetRotationSpeed: 2
   objectsToRotate:
+  - {fileID: 1649851431}
   - {fileID: 861845055}
   - {fileID: 457848712}
   - {fileID: 1115061035}

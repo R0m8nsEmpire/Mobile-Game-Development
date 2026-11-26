@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 public class Missile_Spawner : MonoBehaviour
 {
     //Make an instance
@@ -14,7 +12,7 @@ public class Missile_Spawner : MonoBehaviour
     //Missile prefab
     [SerializeField] GameObject missilePrefab;
     public List<GameObject> missile = new List<GameObject>();
-    static public List<GameObject> targetedEnemies = new List<GameObject>();
+    public List<GameObject> targetedEnemies = new List<GameObject>();
     //Places for missiles to spawn
     [SerializeField] Transform[] placesToSpawn;
     //Spawn missiles Coroutine
@@ -41,6 +39,7 @@ public class Missile_Spawner : MonoBehaviour
             obj.transform.localPosition = Vector3.zero;
             obj.SetActive(false);
             missile.Add(obj);
+            obj.name = "missile " + i;
         }
     }
     public void StartSpawningMissiles()
@@ -100,12 +99,30 @@ public class Missile_Spawner : MonoBehaviour
     //Get a target
     public GameObject GetTarget()
     {
+        List<GameObject> possibleEnemies = new List<GameObject>();
+        float closestEnemy = Mathf.Infinity;
+        GameObject closestTarget = null;
+        possibleEnemies.Clear();
         for (int i = 0; i < EnemySpawner.instance.enemyType1.Count; i++)
         {
             if (EnemySpawner.instance.enemyType1[i].activeInHierarchy && !targetedEnemies.Contains(EnemySpawner.instance.enemyType1[i]))
             {
-                return EnemySpawner.instance.enemyType1[i];
+                possibleEnemies.Add(EnemySpawner.instance.enemyType1[i]);
             }
+        }
+        foreach(GameObject target in possibleEnemies)
+        {
+            Vector3 directionToTarget = target.transform.position - new Vector3(0, 0, 0);
+            float distance = directionToTarget.magnitude;
+            if (distance < closestEnemy && !targetedEnemies.Contains(target))
+            {
+                closestEnemy = distance;
+                closestTarget = target;
+            }
+        }
+        if(closestTarget != null)
+        {
+            return closestTarget;
         }
         return null;
     }
