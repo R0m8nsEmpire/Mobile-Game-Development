@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy_1_Controller : MonoBehaviour
 {
+    public float spawnInterval;
     //Spawn an enemy from the inspector
     [ContextMenu("Spawn Enemy Type 1")]
     public void SpawnEnemy()
@@ -58,7 +59,7 @@ public class Enemy_1_Controller : MonoBehaviour
         {
             //Spawn an enemy every 5 seconds
             SpawnEnemy();
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(spawnInterval);
             yield return null;
         }
     }
